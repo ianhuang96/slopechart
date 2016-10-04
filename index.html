@@ -4,14 +4,6 @@
     <title>Slopechart</title>
     <script type="text/javascript" <script src="https://d3js.org/d3.v3.min.js"></script>
 </head>
-<style>
-         .axis path,
-         .axis line {
-           fill: none;
-           stroke: #000;
-           shape-rendering: crispEdges;
-         }
-     </style>
 
 <body>
     <script>
@@ -25,8 +17,14 @@
                     {"category":"Full Time","value":[117,101]},
                     {"category":"Total","value":[150,130]}];
 
-        var color = d3.scale.category10();
-
+       	var color = {
+            "Part Time": "#FF0000",
+            "PhD": "#B8860B",
+            "Master": "#FF4500",
+            "Full Time": "#008000",
+            "Total": "#00008B"
+        };
+		
         var scale = d3.scale.linear()
                             .domain([0,200])
                             .range([0,height-2*margin]);
@@ -51,7 +49,7 @@
                               .attr("y1", function(d) { return height-margin-scale(d.value[0]); })
                               .attr("y2", function(d) { return height-margin-scale(d.value[1]); })
                               .attr("stroke-width", 3)
-                              .attr("stroke", function(d,i) { return color(i); });
+                             .attr('stroke', function(d) { return color[d.category]; } )
 
         //put the category text above each line
 		var cageoryText = svg.selectAll("text")
